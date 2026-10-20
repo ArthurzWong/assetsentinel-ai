@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#131e30"/><stop offset="100%" stop-color="#2b3d62"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0d9488"/>
+    </marker>
+    <marker id="arrowNavy" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a5591"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#f4f6fb"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1600" height="96" fill="url(#hdr)"/>
+  <rect x="0" y="96" width="1600" height="5" fill="#14b8a6"/>
+  <text x="56" y="50" font-family="Helvetica, Arial, sans-serif" font-size="30" font-weight="bold" fill="#ffffff">AssetSentinel AI — Phase 1 Demo Workflow</text>
+  <text x="56" y="78" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#99f6e4">Property → Inspection → Images → Findings → Human Review → Approved Report → PDF   (all data fictional &amp; labelled DEMO)</text>
+  <rect x="1298" y="28" width="248" height="40" rx="20" fill="#fbbf24"/>
+  <text x="1422" y="54" font-family="Helvetica, Arial, sans-serif" font-size="19" font-weight="bold" fill="#131e30" text-anchor="middle">DEMO BUILD</text>
+
+  <!-- Row 1 -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="60" y="160" width="320" height="150" rx="14" fill="#ffffff" stroke="#cbd6ec" stroke-width="2"/>
+    <rect x="60" y="160" width="320" height="10" rx="5" fill="#3a5591"/>
+    <text x="84" y="206" font-size="22" font-weight="bold" fill="#1d2c47">1 · Property</text>
+    <text x="84" y="236" font-size="15" fill="#4a6cae">4 demo industrial sites:</text>
+    <text x="84" y="258" font-size="15" fill="#4a6cae">Shah Alam · Klang · Puchong · Rawang</text>
+    <text x="84" y="288" font-size="13" fill="#94a3b8">create / edit / detail views</text>
+
+    <rect x="470" y="160" width="320" height="150" rx="14" fill="#ffffff" stroke="#cbd6ec" stroke-width="2"/>
+    <rect x="470" y="160" width="320" height="10" rx="5" fill="#3a5591"/>
+    <text x="494" y="206" font-size="22" font-weight="bold" fill="#1d2c47">2 · Inspection</text>
+    <text x="494" y="236" font-size="15" fill="#4a6cae">Create survey (INSP-ref), inspector,</text>
+    <text x="494" y="258" font-size="15" fill="#4a6cae">date, weather, scope summary</text>
+    <text x="494" y="288" font-size="13" fill="#94a3b8">status: draft → in progress → review</text>
+
+    <rect x="880" y="160" width="320" height="150" rx="14" fill="#ffffff" stroke="#cbd6ec" stroke-width="2"/>
+    <rect x="880" y="160" width="320" height="10" rx="5" fill="#14b8a6"/>
+    <text x="904" y="206" font-size="22" font-weight="bold" fill="#1d2c47">3 · Images</text>
+    <text x="904" y="236" font-size="15" fill="#4a6cae">Gallery of synthetic demo scenes;</text>
+    <text x="904" y="258" font-size="15" fill="#4a6cae">upload = browser session only</text>
+    <text x="904" y="288" font-size="13" fill="#94a3b8">nothing persisted to any server</text>
+
+    <rect x="1290" y="160" width="250" height="150" rx="14" fill="#ffffff" stroke="#cbd6ec" stroke-width="2"/>
+    <rect x="1290" y="160" width="250" height="10" rx="5" fill="#14b8a6"/>
+    <text x="1314" y="206" font-size="22" font-weight="bold" fill="#1d2c47">4 · Findings</text>
+    <text x="1314" y="236" font-size="15" fill="#4a6cae">react-konva annotations,</text>
+    <text x="1314" y="258" font-size="15" fill="#4a6cae">defect type, severity, notes</text>
+    <text x="1314" y="288" font-size="13" fill="#94a3b8">starts as pending_review</text>
+
+    <line x1="380" y1="235" x2="464" y2="235" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="790" y1="235" x2="874" y2="235" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+    <line x1="1200" y1="235" x2="1284" y2="235" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Connector: Findings down → Human review (row 2) -->
+  <path d="M 1415 310 L 1415 400 L 875 400 L 875 444" fill="none" stroke="#3a5591" stroke-width="3" marker-end="url(#arrowNavy)"/>
+
+  <!-- Row 2: report (left) ← gate (mid) ← review (right) -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <!-- Human review -->
+    <rect x="700" y="450" width="350" height="170" rx="14" fill="#fffbeb" stroke="#f59e0b" stroke-width="2.5"/>
+    <text x="724" y="496" font-size="22" font-weight="bold" fill="#92400e">5 · Human review</text>
+    <text x="724" y="526" font-size="15" fill="#b45309">approve · edit · reject each finding</text>
+    <text x="724" y="548" font-size="15" fill="#b45309">full review history recorded</text>
+    <text x="724" y="578" font-size="13" fill="#b45309">AI-like items stay labelled “demo suggestion”</text>
+    <text x="724" y="600" font-size="13" fill="#b45309">until a human signs off</text>
+
+    <!-- Gate -->
+    <rect x="470" y="480" width="160" height="110" rx="14" fill="#131e30"/>
+    <text x="550" y="518" font-size="17" font-weight="bold" fill="#fbbf24" text-anchor="middle">GATE</text>
+    <text x="550" y="542" font-size="12" fill="#e2e8f0" text-anchor="middle">publish only when</text>
+    <text x="550" y="560" font-size="12" fill="#e2e8f0" text-anchor="middle">every finding is</text>
+    <text x="550" y="578" font-size="12" fill="#e2e8f0" text-anchor="middle">reviewed</text>
+
+    <!-- Approved report -->
+    <rect x="60" y="450" width="350" height="170" rx="14" fill="#f0fdfa" stroke="#14b8a6" stroke-width="2.5"/>
+    <text x="84" y="496" font-size="22" font-weight="bold" fill="#134e4a">6 · Approved report</text>
+    <text x="84" y="526" font-size="15" fill="#0f766e">professional HTML preview,</text>
+    <text x="84" y="548" font-size="15" fill="#0f766e">approved findings + evidence only</text>
+    <text x="84" y="578" font-size="13" fill="#0d9488">rejected findings excluded</text>
+    <text x="84" y="600" font-size="13" fill="#0d9488">publish action blocked until gate opens</text>
+
+    <!-- review → gate -->
+    <line x1="700" y1="535" x2="636" y2="535" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+    <!-- gate → report -->
+    <line x1="470" y1="535" x2="416" y2="535" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+    <!-- report → PDF -->
+    <line x1="235" y1="620" x2="235" y2="694" stroke="#0d9488" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- PDF -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="60" y="700" width="470" height="130" rx="14" fill="#ffffff" stroke="#cbd6ec" stroke-width="2"/>
+    <rect x="60" y="700" width="470" height="10" rx="5" fill="#3a5591"/>
+    <text x="84" y="746" font-size="22" font-weight="bold" fill="#1d2c47">7 · PDF export</text>
+    <text x="84" y="776" font-size="15" fill="#4a6cae">jsPDF in-browser, annotated evidence,</text>
+    <text x="84" y="798" font-size="15" fill="#4a6cae">demo disclaimer on every page</text>
+  </g>
+
+  <!-- bottom strip -->
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="570" y="700" width="970" height="130" rx="14" fill="#eef2f9" stroke="#cbd6ec" stroke-width="2"/>
+    <text x="598" y="738" font-size="17" font-weight="bold" fill="#1d2c47">Under the hood</text>
+    <text x="598" y="766" font-size="14.5" fill="#475569">• In-browser demo store (localStorage) behind a Repo seam — Supabase drops in later without UI changes</text>
+    <text x="598" y="790" font-size="14.5" fill="#475569">• Fully static Next.js 15 export; no runtime server, no external AI calls in Phase 1</text>
+    <text x="598" y="814" font-size="14.5" fill="#b45309">• Safety: synthetic imagery &amp; fictional records only — no real defects identified, not a structural certification</text>
+  </g>
+</svg>
