@@ -1,5 +1,7 @@
 # AssetSentinel AI — Phase 1 (Demo MVP)
 
+**Live demo:** <https://arthurzwong.github.io/assetsentinel-ai/>
+
 A polished, fully static web application for **industrial roof and building-exterior inspection reporting** in Malaysia. This is a demonstration MVP: every property, inspection, finding, review and report in the app is **fictional demo data**, clearly labelled `DEMO`.
 
 > ⚠️ **Demo mode:** No real customer data. No AI is connected in Phase 1 — anything that looks like an "AI finding" is a scripted demo suggestion. Nothing here is a structural certification.
