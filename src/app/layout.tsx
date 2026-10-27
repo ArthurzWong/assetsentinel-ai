@@ -6,6 +6,7 @@ import "@fontsource/inter/600.css";
 import "@fontsource/inter/700.css";
 import "./globals.css";
 import { DemoStoreProvider } from "@/lib/store";
+import { SupabaseSyncProvider } from "@/components/supabase-sync-provider";
 import { AppShell } from "@/components/app-shell";
 
 export const metadata: Metadata = {
@@ -19,7 +20,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="font-sans antialiased">
         <DemoStoreProvider>
-          <AppShell>{children}</AppShell>
+          <SupabaseSyncProvider>
+            <AppShell>{children}</AppShell>
+          </SupabaseSyncProvider>
         </DemoStoreProvider>
       </body>
     </html>

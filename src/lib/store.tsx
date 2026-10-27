@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type {
   ActivityEntry,
@@ -121,6 +121,8 @@ export interface StoreApi {
   updateFinding: (id: string, patch: Partial<Finding>) => void;
   setCompany: (patch: Partial<CompanyProfile>) => void;
   resetDemo: () => void;
+  subscribe: (listener: () => void) => () => void;
+  replaceAll: (next: Omit<StoreState, "company"> & { company?: CompanyProfile }) => void;
 }
 
 const StoreContext = createContext<StoreApi | null>(null);
@@ -128,10 +130,34 @@ const StoreContext = createContext<StoreApi | null>(null);
 function useCreateStore(): StoreApi {
   const [state, setState] = useState<StoreState>(initialStore);
   const [hydrated, setHydrated] = useState(false);
+  const listenersRef = useRef<Set<() => void>>(new Set());
 
   useEffect(() => {
     setState(loadStore());
     setHydrated(true);
+  }, []);
+
+  const subscribe = useCallback((listener: () => void) => {
+    listenersRef.current.add(listener);
+    return () => {
+      listenersRef.current.delete(listener);
+    };
+  }, []);
+
+  const replaceAll = useCallback((next: Omit<StoreState, "company"> & { company?: CompanyProfile }) => {
+    setState((prev) => {
+      const merged: StoreState = {
+        properties: next.properties,
+        inspections: next.inspections,
+        images: next.images,
+        findings: next.findings,
+        reviews: next.reviews,
+        activity: next.activity,
+        company: next.company ?? prev.company,
+      };
+      persist(merged);
+      return merged;
+    });
   }, []);
 
   const mutate = useCallback((fn: (s: StoreState) => StoreState) => {
@@ -139,6 +165,10 @@ function useCreateStore(): StoreApi {
       const next = fn(prev);
       persist(next);
       return next;
+    });
+    // notify sync listeners after state update is scheduled
+    queueMicrotask(() => {
+      for (const l of listenersRef.current) l();
     });
   }, []);
 
@@ -300,8 +330,10 @@ function useCreateStore(): StoreApi {
       updateFinding,
       setCompany,
       resetDemo,
+      subscribe,
+      replaceAll,
     }),
-    [state, hydrated, addProperty, updateProperty, addInspection, updateInspectionStatus, addImage, addFinding, reviewFinding, updateFinding, setCompany, resetDemo]
+    [state, hydrated, addProperty, updateProperty, addInspection, updateInspectionStatus, addImage, addFinding, reviewFinding, updateFinding, setCompany, resetDemo, subscribe, replaceAll]
   );
 }
 

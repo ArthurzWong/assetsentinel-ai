@@ -5,6 +5,8 @@ import type { FormEvent } from "react";
 import { Building, Check, Palette, RotateCcw, Users } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { DEMO_TEAM } from "@/lib/data";
+import { SupabaseSettingsPanel } from "@/components/supabase-settings";
+import { useSupabaseSync } from "@/components/supabase-sync-provider";
 import {
   Badge,
   Button,
@@ -37,6 +39,7 @@ const ROLE_DESC: Record<string, string> = {
 
 export default function SettingsPage() {
   const { state, setCompany, resetDemo, hydrated } = useStore();
+  const { connect, disconnect } = useSupabaseSync();
   const [saved, setSaved] = useState(false);
   const company = state.company;
 
@@ -67,6 +70,10 @@ export default function SettingsPage() {
         subtitle="Company profile, roles preview, pricing and branding — all demo configuration."
         actions={<DemoPill />}
       />
+
+      <div className="mb-6">
+        <SupabaseSettingsPanel onConnect={connect} onDisconnect={disconnect} />
+      </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Company profile */}

@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { useDemoUploads } from "@/hooks/use-demo-uploads";
+import { StorageUploadButton } from "@/components/storage-upload-button";
+import { useSupabaseSync } from "@/components/supabase-sync-provider";
 import {
   Badge,
   Button,
@@ -36,10 +38,12 @@ import { inspectionStatusLabel, reviewGate, severityColor, statusBadgeClass } fr
 function InspectionWorkspacePageInner() {
   const search = useSearchParams();
   const id = search.get("id") ?? "";
-  const { state, hydrated } = useStore();
+  const { state, hydrated, addImage } = useStore();
   const { uploads, ingestFiles } = useDemoUploads();
+  const { isConfigured } = useSupabaseSync();
   const fileInput = useRef<HTMLInputElement>(null);
   const [uploadNote, setUploadNote] = useState("");
+  const [storageNote, setStorageNote] = useState("");
 
   const inspection = useMemo(
     () => state.inspections.find((i) => i.id === id),
@@ -70,6 +74,30 @@ function InspectionWorkspacePageInner() {
         hint="Demo data is stored per browser. Reset the demo from the sidebar to restore the seeded dataset."
         action={<Link href="/inspections" className="text-sm font-medium text-teal-700 hover:underline">Back to inspections</Link>}
       />
+    );
+  }
+
+  function onStorageUploaded(img: {
+    id: string;
+    fileName: string;
+    publicUrl: string;
+    storagePath: string;
+    width?: number;
+    height?: number;
+  }) {
+    if (!inspection) return;
+    addImage({
+      inspectionId: inspection.id,
+      fileName: img.fileName,
+      src: img.publicUrl,
+      capturedAt: new Date().toISOString(),
+      locationLabel: img.fileName,
+      isDemoUpload: false,
+      width: img.width,
+      height: img.height,
+    });
+    setStorageNote(
+      `Uploaded to Supabase Storage (${img.storagePath}) and added to the gallery — persists across devices while connected.`
     );
   }
 
@@ -146,6 +174,13 @@ function InspectionWorkspacePageInner() {
           subtitle="Demo scene images; uploaded files stay in this browser session"
           action={
             <>
+              {isConfigured ? (
+                <StorageUploadButton
+                  inspectionId={inspection.id}
+                  disabled={!inspection}
+                  onUploaded={onStorageUploaded}
+                />
+              ) : null}
               <input
                 ref={fileInput}
                 type="file"
@@ -156,12 +191,18 @@ function InspectionWorkspacePageInner() {
                 aria-label="Upload inspection images (demo, session only)"
               />
               <Button size="sm" variant="outline" onClick={() => fileInput.current?.click()}>
-                <Upload className="h-4 w-4" aria-hidden /> Upload images
+                <Upload className="h-4 w-4" aria-hidden /> Upload (session only)
               </Button>
             </>
           }
         />
         <CardBody>
+          {storageNote ? (
+            <p className="mb-4 flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-900">
+              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
+              {storageNote}
+            </p>
+          ) : null}
           {uploadNote ? (
             <p className="mb-4 flex items-start gap-2 rounded-lg border border-teal-200 bg-teal-50 px-3 py-2 text-xs text-teal-900">
               <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden />
